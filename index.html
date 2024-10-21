@@ -127,25 +127,29 @@
         var button = document.getElementById(buttonId);
         var tooltip = document.getElementById('tooltip');
 
-        // Deactivate all layers and buttons first
-        var allLayers = document.querySelectorAll('.layer-image');
-        var allButtons = document.querySelectorAll('.toggle-button');
+        // Check if the layer is already active
+        if (layer.classList.contains('active')) {
+            // Deactivate the layer if it is already active
+            layer.classList.remove('active');
+            button.classList.remove('active');
+            tooltip.textContent = 'No active layer.';
+        } else {
+            // Hide all other layers and deactivate all buttons
+            var allLayers = document.querySelectorAll('.layer-image');
+            var allButtons = document.querySelectorAll('.toggle-button');
 
-        allLayers.forEach(function(img) {
-            img.classList.remove('active');
-        });
+            allLayers.forEach(function(img) {
+                img.classList.remove('active');
+            });
 
-        allButtons.forEach(function(btn) {
-            btn.classList.remove('active');
-        });
+            allButtons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
 
-        // If the clicked layer is not active, activate it
-        if (!layer.classList.contains('active')) {
+            // Activate the clicked layer and button
             layer.classList.add('active');
             button.classList.add('active');
             tooltip.textContent = `Info about ${button.textContent}`; // Update tooltip for the active layer
-        } else {
-            tooltip.textContent = 'No active layer.'; // If no layer is active, reset tooltip
         }
     }
 </script>
