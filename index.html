@@ -67,7 +67,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Keep aspect ratio for map and layers */
+            object-fit: contain; /* Resize images to fit the container */
             pointer-events: none; /* Disable interaction with the images */
         }
 
@@ -105,7 +105,7 @@
     <!-- Map in the center -->
     <div class="map-container">
         <!-- The base map image -->
-        <img src="layer0.png" alt="Background Map" class="map-image">
+        <img src="background-map.png" alt="Background Map" class="map-image">
         <!-- Overlay layers that will be toggled -->
         <img src="layer1.png" alt="Layer 1" id="layer1" class="layer-image">
         <img src="layer2.png" alt="Layer 2" id="layer2" class="layer-image">
@@ -115,7 +115,7 @@
     <!-- Tooltip on the right -->
     <div class="tooltip-container">
         <div id="tooltip" class="tooltip-text">
-            Hover over buttons to see more information about layers.
+            No active layer.
         </div>
     </div>
 </div>
@@ -125,38 +125,25 @@
     function toggleLayer(layerId, buttonId) {
         var layer = document.getElementById(layerId);
         var button = document.getElementById(buttonId);
+        var tooltip = document.getElementById('tooltip');
 
-        // Hide all layers first
-        var allLayers = document.querySelectorAll('.layer-image');
-        allLayers.forEach(function(img) {
-            img.classList.remove('active');
-        });
+        // Toggle the layer's visibility
+        if (layer.classList.contains('active')) {
+            layer.classList.remove('active');
+            button.classList.remove('active');
+            tooltip.textContent = 'No active layer.'; // Update tooltip when no layers are active
+        } else {
+            layer.classList.add('active');
+            button.classList.add('active');
+            tooltip.textContent = `Info about ${button.textContent}`; // Update tooltip for active layer
+        }
 
-        // Deactivate all buttons
-        var allButtons = document.querySelectorAll('.toggle-button');
-        allButtons.forEach(function(btn) {
-            btn.classList.remove('active');
-        });
-
-        // Show the clicked layer and activate the button
-        layer.classList.add('active');
-        button.classList.add('active');
+        // Check if any layers are active; if none, show default tooltip text
+        var anyLayerActive = Array.from(document.querySelectorAll('.layer-image')).some(layer => layer.classList.contains('active'));
+        if (!anyLayerActive) {
+            tooltip.textContent = 'No active layer.';
+        }
     }
-
-    // Optional: Hover events for tooltips
-    var buttons = document.querySelectorAll('.toggle-button');
-    var tooltip = document.getElementById('tooltip');
-
-    buttons.forEach(function(button) {
-        button.addEventListener('mouseenter', function() {
-            var layerInfo = button.textContent;
-            tooltip.textContent = `Info about ${layerInfo}`;
-        });
-
-        button.addEventListener('mouseleave', function() {
-            tooltip.textContent = 'Hover over buttons to see more information about layers.';
-        });
-    });
 </script>
 
 </body>
