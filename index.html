@@ -5,47 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gent Map</title>
     <style>
-        /* Styling the container for the stacked images */
-        .image-container {
-            position: relative;
-            width: 80vw; /* Set width to 80% of viewport width */
-            height: 80vh; /* Set height to 80% of viewport height */
-            margin: 0 auto; /* Center the container horizontally */
-            overflow: hidden; /* Hide any overflow */
-            border: 2px solid #ccc; /* Optional border for the container */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
+        /* Overall page layout */
+        .layout-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
         }
 
-        /* Base styles for all images (they will overlap) */
-        .layered-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* Scale the image to fit the container, maintaining aspect ratio */
-        }
-
-        /* Initially hide all layers except the base layer */
-        .hidden {
-            display: none;
-        }
-
-        /* Sticky buttons container */
+        /* Buttons container */
         .buttons-container {
-            position: fixed;
-            top: 50%;
-            left: 20px; /* Place it to the left of the screen */
-            transform: translateY(-50%); /* Vertically center the buttons */
-            z-index: 1000;
-            background-color: white;
-            padding: 10px;
-            border: 1px solid #ddd;
+            width: 20%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Center map container */
+        .map-container {
+            width: 60%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ccc;
+            overflow: hidden;
+        }
+
+        /* Tooltip container */
+        .tooltip-container {
+            width: 20%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
         }
 
         /* Styling the buttons */
         .toggle-button {
-            display: block; /* Make buttons stack vertically */
+            display: block;
+            width: 100%;
             margin-bottom: 10px;
             padding: 10px;
             background-color: #008CBA;
@@ -56,82 +53,110 @@
         }
 
         .toggle-button.active {
-            background-color: #4CAF50; /* Change to green when layer is active */
+            background-color: #4CAF50;
         }
 
         .toggle-button:hover {
             background-color: #005f7f;
         }
 
-        /* Tooltip styling */
-        .tooltip {
-            display: none; /* Hidden by default */
+        /* Map layers */
+        .map-image {
             position: absolute;
-            right: -220px; /* Position tooltip on the right of the map */
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .layer-image {
+            position: absolute;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none; /* Initially hidden */
+        }
+
+        .layer-image.active {
+            display: block;
+        }
+
+        /* Tooltip styling */
+        .tooltip-text {
             background-color: rgba(0, 0, 0, 0.8);
             color: white;
             padding: 10px;
             border-radius: 5px;
-            white-space: normal; /* Allow multiline text */
-            z-index: 1001;
             font-family: Arial, sans-serif;
-            font-size: 12px;
-            max-width: 200px;
-        }
-
-        /* Show tooltip on button hover */
-        .toggle-button:hover .tooltip {
-            display: block;
+            font-size: 14px;
+            max-width: 100%;
         }
     </style>
 </head>
 <body>
 
-<div class="image-container">
-    <img src="layer0.png" alt="Background" id="background" class="layered-image">
-    <img src="layer1.png" alt="Layer 1" id="layer1" class="layered-image hidden">
-    <img src="layer2.png" alt="Layer 2" id="layer2" class="layered-image hidden">
-</div>
+<div class="layout-container">
+    <!-- Buttons on the left -->
+    <div class="buttons-container">
+        <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1')">Layer 1</button>
+        <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2')">Layer 2</button>
+        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3')">Layer 3</button>
+    </div>
 
-<div class="buttons-container">
-    <!-- Button to toggle Background Layer -->
-    <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1')">Layer 1
-        <div class="tooltip">Layer 1 information</div>
-    </button>
+    <!-- Map in the center -->
+    <div class="map-container">
+        <img src="layer0.png" alt="Background Map" class="map-image">
+        <img src="layer1.png" alt="Layer 1" id="layer1" class="layer-image">
+        <img src="layer2.png" alt="Layer 2" id="layer2" class="layer-image">
+        <img src="layer3.png" alt="Layer 3" id="layer3" class="layer-image">
+    </div>
 
-    <!-- Button to toggle Another Layer -->
-    <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2')">Layer 2
-        <div class="tooltip">Layer 2 information</div>
-    </button>
+    <!-- Tooltip on the right -->
+    <div class="tooltip-container">
+        <div id="tooltip" class="tooltip-text">
+            Hover over buttons to see more information about layers.
+        </div>
+    </div>
 </div>
 
 <script>
-    // Function to toggle the visibility of a layer and change button color
+    // Function to toggle the visibility of a layer and change button state
     function toggleLayer(layerId, buttonId) {
         var layer = document.getElementById(layerId);
         var button = document.getElementById(buttonId);
 
         // Hide all layers first
-        var allLayers = document.querySelectorAll('.layered-image');
-        allLayers.forEach(function (img) {
-            if (img.id !== 'background') { // Keep background always visible
-                img.classList.add('hidden');
-            }
+        var allLayers = document.querySelectorAll('.layer-image');
+        allLayers.forEach(function(img) {
+            img.classList.remove('active');
         });
 
-        // Remove active state from all buttons
+        // Deactivate all buttons
         var allButtons = document.querySelectorAll('.toggle-button');
-        allButtons.forEach(function (btn) {
+        allButtons.forEach(function(btn) {
             btn.classList.remove('active');
         });
 
-        // Show the clicked layer and set the button as active
-        if (layer.classList.contains('hidden')) {
-            layer.classList.remove('hidden');
-            button.classList.add('active');
-        }
+        // Show the clicked layer and activate the button
+        layer.classList.add('active');
+        button.classList.add('active');
     }
+
+    // Optional: Hover events for tooltips
+    var buttons = document.querySelectorAll('.toggle-button');
+    var tooltip = document.getElementById('tooltip');
+
+    buttons.forEach(function(button) {
+        button.addEventListener('mouseenter', function() {
+            var layerInfo = button.textContent;
+            tooltip.textContent = `Info about ${layerInfo}`;
+        });
+
+        button.addEventListener('mouseleave', function() {
+            tooltip.textContent = 'Hover over buttons to see more information about layers.';
+        });
+    });
 </script>
 
 </body>
