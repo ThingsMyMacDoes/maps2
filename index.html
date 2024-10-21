@@ -97,9 +97,14 @@
 <div class="layout-container">
     <!-- Buttons on the left -->
     <div class="buttons-container">
-        <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1')">Schelde</button>
-        <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2')">Layer 2</button>
-        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3')">Layer 3</button>
+        <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1', 'De Schelde (Frans: Escaut) is een 350 kilometer lange rivier die 
+                                                                        ontspringt in de Franse gemeente Gouy in het noorden van Frankrijk en door België en het 
+                                                                        zuidwesten van Nederland naar de Noordzee stroomt. Haar eerste benaming was Scaldis, in een 
+                                                                        Romeinse tekst uit de 1e eeuw voor Chr.[1] Een andere naam was Scala. De grootste haven aan de 
+                                                                        Schelde is de haven van Antwerpen. Al voor de Romeinen was de monding van de Schelde van 
+                                                                        strategisch belang.')">Schelde</button>
+        <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2', 'Layer 2: Historical landmarks of Gent')">Layer 2</button>
+        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3', 'Layer 3: Population distribution of Gent')">Layer 3</button>
     </div>
 
     <!-- Map in the center -->
@@ -122,7 +127,7 @@
 
 <script>
     // Function to toggle the visibility of a layer and change button state
-    function toggleLayer(layerId, buttonId) {
+    function toggleLayer(layerId, buttonId, tooltipText) {
         var layer = document.getElementById(layerId);
         var button = document.getElementById(buttonId);
         var tooltip = document.getElementById('tooltip');
@@ -132,7 +137,7 @@
             // Deactivate the layer if it is already active
             layer.classList.remove('active');
             button.classList.remove('active');
-            tooltip.textContent = 'make a selection';
+            tooltip.textContent = 'Make a selection on the left';
         } else {
             // Hide all other layers and deactivate all buttons
             var allLayers = document.querySelectorAll('.layer-image');
@@ -149,7 +154,7 @@
             // Activate the clicked layer and button
             layer.classList.add('active');
             button.classList.add('active');
-            tooltip.textContent = `Info about ${button.textContent}`; // Update tooltip for the active layer
+            tooltip.textContent = tooltipText; // Update tooltip with specific text
         }
     }
 </script>
