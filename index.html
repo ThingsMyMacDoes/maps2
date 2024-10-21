@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gent Map</title>
+    <style>
+        /* Styling the container for the stacked images */
+        .image-container {
+            position: relative;
+            width: 80vw; /* Set width to 80% of viewport width */
+            height: 80vh; /* Set height to 80% of viewport height */
+            margin: 0 auto; /* Center the container horizontally */
+            overflow: hidden; /* Hide any overflow */
+            border: 2px solid #ccc; /* Optional border for the container */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional shadow */
+        }
+
+        /* Base styles for all images (they will overlap) */
+        .layered-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Scale the image to fit the container, maintaining aspect ratio */
+        }
+
+        /* Initially hide all layers except the base layer */
+        .hidden {
+            display: none;
+        }
+
+        /* Sticky buttons container */
+        .buttons-container {
+            position: fixed;
+            top: 50%;
+            left: 20px; /* Place it to the left of the screen */
+            transform: translateY(-50%); /* Vertically center the buttons */
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        /* Styling the buttons */
+        .toggle-button {
+            display: block; /* Make buttons stack vertically */
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button.active {
+            background-color: #4CAF50; /* Change to green when layer is active */
+        }
+
+        .toggle-button:hover {
+            background-color: #005f7f;
+        }
+
+        /* Tooltip styling */
+        .tooltip {
+            display: none; /* Hidden by default */
+            position: absolute;
+            right: -220px; /* Position tooltip on the right of the map */
+            top: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: normal; /* Allow multiline text */
+            z-index: 1001;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            max-width: 200px;
+        }
+
+        /* Show tooltip on button hover */
+        .toggle-button:hover .tooltip {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="image-container">
+    <img src="background.png" alt="Background" id="background" class="layered-image">
+    <img src="layer1.png" alt="Layer 1" id="layer1" class="layered-image hidden">
+    <img src="layer2.png" alt="Layer 2" id="layer2" class="layered-image hidden">
+</div>
+
+<div class="buttons-container">
+    <!-- Button to toggle Background Layer -->
+    <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1')">Layer 1
+        <div class="tooltip">Layer 1 information</div>
+    </button>
+
+    <!-- Button to toggle Another Layer -->
+    <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2')">Layer 2
+        <div class="tooltip">Layer 2 information</div>
+    </button>
+</div>
+
+<script>
+    // Function to toggle the visibility of a layer and change button color
+    function toggleLayer(layerId, buttonId) {
+        var layer = document.getElementById(layerId);
+        var button = document.getElementById(buttonId);
+
+        // Hide all layers first
+        var allLayers = document.querySelectorAll('.layered-image');
+        allLayers.forEach(function (img) {
+            if (img.id !== 'background') { // Keep background always visible
+                img.classList.add('hidden');
+            }
+        });
+
+        // Remove active state from all buttons
+        var allButtons = document.querySelectorAll('.toggle-button');
+        allButtons.forEach(function (btn) {
+            btn.classList.remove('active');
+        });
+
+        // Show the clicked layer and set the button as active
+        if (layer.classList.contains('hidden')) {
+            layer.classList.remove('hidden');
+            button.classList.add('active');
+        }
+    }
+</script>
+
+</body>
+</html>
