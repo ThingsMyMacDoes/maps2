@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gent Map with Layers</title>
+    <style>
+        /* Overall page layout */
+        .layout-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Buttons container */
+        .buttons-container {
+            width: 20%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Center map container */
+        .map-container {
+            width: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #ccc;
+        }
+
+        /* Tooltip container */
+        .tooltip-container {
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        /* Styling the buttons */
+        .toggle-button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button.active {
+            background-color: #4CAF50;
+        }
+
+        .toggle-button:hover {
+            background-color: #005f7f;
+        }
+
+        /* Map layers and background */
+        .map-image, .layer-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Resize images to fit the container */
+            pointer-events: none; /* Disable interaction with the images */
+        }
+
+        .layer-image {
+            display: none; /* Initially hidden */
+            opacity: 0.8; /* Make layers slightly transparent */
+        }
+
+        .layer-image.active {
+            display: block;
+        }
+
+        /* Tooltip styling */
+        .tooltip-text {
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout-container">
+    <!-- Buttons on the left -->
+    <div class="buttons-container">
+        <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1', 'Reka Schelde (francosko: Escaut) je 350 kilometrov dolga reka, ki izvira v francoski občini Gouy na severu Francije in teče skozi Belgijo ter jugozahodni del Nizozemske proti Severnemu morju. Njeno prvotno ime je bilo Scaldis, v rimski besedi iz 1. stoletja pred našim štetjem. Drugo ime je bilo Scala. Največja luka ob Scheldu je luka Antwerpen. Že pred Rimljani je bil ustje Schelde strateškega pomena.')">Schelde</button>
+        <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2', 'De Leie (francosko: Lys) je reka v Franciji in Belgiji. Je pritok reke Schelde in se vanje izliva v mestu Gent. Reka izvira v Lisbourgu in je dolga približno 200 kilometrov. De Leie tvori belgijsko-francosko mejo od Armentières do Menena. De Leie imenujejo tudi Zlata reka, saj je bilo lan med letoma 1860 in 1945 pridelano ob Leie. Izvir Leie v Lisbourgu je enega najbolj tipičnih primerov artesijskega izvira. Hidrografska bazen Leie zajema skupno 4727 km², od tega je približno 2900 km² v Franciji in približno 1825 km² v Belgiji. Med izvirjem in ustjem je naklon tal zelo majhen, kar je omogočilo oblikovanje številnih meandrov. De Leie je bila prvič omenjena leta 694 kot Legia pri lokaciji Sloten, današnjem romarskem kraju Oostakker-Lourdes blizu Gent. Omenitev kot super fluvio Legia pomeni nad tokom Leie. Ni jasno, kako se je izgovarjala Legia, kar ima posledice za morebitno izvor. Obstajajo dve konkurenčni teoriji o izvoru imena. Glede na izgovorjavo črke g v Legia se domneva keltski (izgovorjava kot g) ali belgijski (izgovorjava kot j) izvor. V obeh primerih pa je beseda sledljiva do indoevropskega korena leg, kar pomeni teči ali plavati.')">Leie</button>
+        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3', 'Layer 3: Population distribution of Gent')">Layer 3</button>
+    </div>
+
+    <!-- Map in the center -->
+    <div class="map-container">
+        <!-- The base map image -->
+        <img src="layer0.png" alt="Background Map" class="map-image">
+        <!-- Overlay layers that will be toggled -->
+        <img src="Schelde.png" alt="Layer 1" id="layer1" class="layer-image">
+        <img src="Leie.png" alt="Layer 2" id="layer2" class="layer-image">
+        <img src="layer3.png" alt="Layer 3" id="layer3" class="layer-image">
+    </div>
+
+    <!-- Tooltip on the right -->
+    <div class="tooltip-container">
+        <div id="tooltip" class="tooltip-text">
+            Make a selection on the left
+        </div>
+    </div>
+</div>
+
+<script>
+    // Function to toggle the visibility of a layer and change button state
+    function toggleLayer(layerId, buttonId, tooltipText) {
+        var layer = document.getElementById(layerId);
+        var button = document.getElementById(buttonId);
+        var tooltip = document.getElementById('tooltip');
+
+        // Check if the layer is already active
+        if (layer.classList.contains('active')) {
+            // Deactivate the layer if it is already active
+            layer.classList.remove('active');
+            button.classList.remove('active');
+            tooltip.textContent = 'Make a selection on the left';
+        } else {
+            // Hide all other layers and deactivate all buttons
+            var allLayers = document.querySelectorAll('.layer-image');
+            var allButtons = document.querySelectorAll('.toggle-button');
+
+            allLayers.forEach(function(img) {
+                img.classList.remove('active');
+            });
+
+            allButtons.forEach(function(btn) {
+                btn.classList.remove('active');
+            });
+
+            // Activate the clicked layer and button
+            layer.classList.add('active');
+            button.classList.add('active');
+            tooltip.textContent = tooltipText; // Update tooltip with specific text
+        }
+    }
+</script>
+
+</body>
+</html>
