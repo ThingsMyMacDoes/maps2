@@ -1,0 +1,107 @@
+/* Overall page layout */
+.layout-container {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Buttons container with scrolling */
+.buttons-container {
+    width: 20%;
+    background-color: #f0f0f0;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* Enable scrolling when there are too many buttons */
+    max-height: 100vh; /* Limit to the height of the screen */
+}
+
+/* Center map container */
+.map-container {
+    width: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    background-color: #ccc;
+}
+
+/* Tooltip container with scrolling */
+.tooltip-container {
+    width: 30%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    overflow-y: auto; /* Enable vertical scrolling */
+    max-height: 100vh; /* Limit to the height of the screen */
+}
+
+/* Styling the buttons */
+.toggle-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #008CBA;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.toggle-button.active {
+    background-color: #4CAF50;
+}
+
+.toggle-button:hover {
+    background-color: #005f7f;
+}
+
+/* Map layers and background */
+.map-image, .layer-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain; /* Resize images to fit the container */
+    pointer-events: none; /* Disable interaction with the images */
+}
+
+.layer-image {
+    display: none; /* Initially hidden */
+    opacity: 0.8; /* Make layers slightly transparent */
+}
+
+.layer-image.active {
+    display: block;
+}
+
+/* Tooltip styling */
+.tooltip-text {
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    color: #333;
+}
+
+.tooltip-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #0066cc;
+    margin-bottom: 10px;
+}
+
+.tooltip-body {
+    margin-top: 5px;
+    line-height: 1.6;
+}
+
+/* Hide all tooltips initially */
+.tooltip-content {
+    display: none;
+}
+
+/* Show the active tooltip */
+.tooltip-content.active {
+    display: block;
+}
