@@ -4,114 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gent Map with Layers</title>
-    <style>
-        /* Overall page layout */
-        .layout-container {
-            display: flex;
-            height: 100vh;
-            width: 100vw;
-        }
-
-        /* Buttons container */
-        .buttons-container {
-            width: 20%;
-            background-color: #f0f0f0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        /* Center map container */
-        .map-container {
-            width: 50%;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            background-color: #ccc;
-        }
-
-        /* Tooltip container */
-        .tooltip-container {
-            width: 30%;
-            padding: 20px;
-            box-sizing: border-box;
-            background-color: #f9f9f9;
-            overflow-y: auto; /* Enable vertical scrolling */
-            max-height: 100vh; /* Make sure the tooltip container doesn't grow beyond the screen */
-        }
-
-        /* Styling the buttons */
-        .toggle-button {
-            display: block;
-            width: 100%;
-            margin-bottom: 10px;
-            padding: 10px;
-            background-color: #008CBA;
-            color: white;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .toggle-button.active {
-            background-color: #4CAF50;
-        }
-
-        .toggle-button:hover {
-            background-color: #005f7f;
-        }
-
-        /* Map layers and background */
-        .map-image, .layer-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            pointer-events: none;
-        }
-
-        .layer-image {
-            display: none; /* Initially hidden */
-            opacity: 0.8; /* Make layers slightly transparent */
-        }
-
-        .layer-image.active {
-            display: block;
-        }
-
-        /* Tooltip styling */
-        .tooltip-text {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            color: #333;
-        }
-
-        .tooltip-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: #0066cc;
-            margin-bottom: 10px;
-        }
-
-        .tooltip-body {
-            margin-top: 5px;
-            line-height: 1.6;
-        }
-
-        /* Hide all tooltips initially */
-        .tooltip-content {
-            display: none;
-        }
-
-        /* Show the active tooltips in sequence */
-        .tooltip-content.active {
-            display: block;
-            margin-bottom: 10px; /* Space between tooltips */
-        }
-    </style>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -128,6 +22,7 @@
         <button class="toggle-button" id="button8" onclick="toggleLayer('layer8', 'button8', 'tooltip8')">Franse Vaart</button>
         <button class="toggle-button" id="button9" onclick="toggleLayer('layer9', 'button9', 'tooltip9')">Verbindingsvaart</button>
         <button class="toggle-button" id="button10" onclick="toggleLayer('layer10', 'button10', 'tooltip10')">Ringvaart</button>
+        <!-- Add more buttons here -->
     </div>
 
     <!-- Map in the center -->
