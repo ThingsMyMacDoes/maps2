@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gent Map with Layers</title>
+    <style>
+        /* Overall page layout */
+        .layout-container {
+            display: flex;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Buttons container */
+        .buttons-container {
+            width: 20%;
+            background-color: #f0f0f0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Center map container */
+        .map-container {
+            width: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            background-color: #ccc;
+        }
+
+        /* Tooltip container */
+        .tooltip-container {
+            width: 30%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        /* Styling the buttons */
+        .toggle-button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #008CBA;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-button.active {
+            background-color: #4CAF50;
+        }
+
+        .toggle-button:hover {
+            background-color: #005f7f;
+        }
+
+        /* Map layers and background */
+        .map-image, .layer-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Resize images to fit the container */
+            pointer-events: none; /* Disable interaction with the images */
+        }
+
+        .layer-image {
+            display: none; /* Initially hidden */
+            opacity: 0.8; /* Make layers slightly transparent */
+        }
+
+        .layer-image.active {
+            display: block;
+        }
+
+        /* Tooltip styling */
+        .tooltip-text {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .tooltip-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+
+        .tooltip-body {
+            margin-top: 5px;
+            line-height: 1.6;
+        }
+
+        /* Hide all tooltips initially */
+        .tooltip-content {
+            display: none;
+        }
+
+        /* Show the active tooltip */
+        .tooltip-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="layout-container">
+    <!-- Buttons on the left -->
+    <div class="buttons-container">
+        <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1', 'tooltip1')">Schelde</button>
+        <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2', 'tooltip2')">Leie</button>
+        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3', 'tooltip3')">Lieve</button>
+        <button class="toggle-button" id="button4" onclick="toggleLayer('layer4', 'button4', 'tooltip4')">Ketelvest</button>
+        <button class="toggle-button" id="button5" onclick="toggleLayer('layer5', 'button5', 'tooltip5')">Brugse Vaart</button>
+        <button class="toggle-button" id="button6" onclick="toggleLayer('layer6', 'button6', 'tooltip6')">Coupure</button>
+        <button class="toggle-button" id="button7" onclick="toggleLayer('layer7', 'button7', 'tooltip7')">Visserij</button>
+        <button class="toggle-button" id="button8" onclick="toggleLayer('layer8', 'button8', 'tooltip8')">Franse Vaart</button>
+        <button class="toggle-button" id="button9" onclick="toggleLayer('layer9', 'button9', 'tooltip9')">Verbindingsvaart</button>
+        <button class="toggle-button" id="button10" onclick="toggleLayer('layer10', 'button10', 'tooltip10')">Ringvaart</button>
+    </div>
+
+    <!-- Map in the center -->
+    <div class="map-container">
+        <!-- The base map image -->
+        <img src="layer0.png" alt="Background Map" class="map-image">
+        <!-- Overlay layers that will be toggled -->
+        <img src="Schelde.png" alt="Layer 1" id="layer1" class="layer-image">
+        <img src="Leie.png" alt="Layer 2" id="layer2" class="layer-image">
+        <img src="Lieve.png" alt="Layer 3" id="layer3" class="layer-image">
+        <img src="Ketelvaart.png" alt="Layer 4" id="layer4" class="layer-image">
+        <img src="Brugse_Vaart.png" alt="Layer 5" id="layer5" class="layer-image">
+        <img src="Coupure.png" alt="Layer 6" id="layer6" class="layer-image">
+        <img src="Visserij.png" alt="Layer 7" id="layer7" class="layer-image">
+        <img src="Franse_Vaart.png" alt="Layer 8" id="layer8" class="layer-image">
+        <img src="Verbindingsvaart.png" alt="Layer 9" id="layer9" class="layer-image">
+        <img src="Ringvaart.png" alt="Layer 10" id="layer10" class="layer-image">
+    </div>
+
+    <!-- Tooltip on the right -->
+    <div class="tooltip-container">
+        <div class="tooltip-text">
+            <div id="tooltip1" class="tooltip-content">
+                <div class="tooltip-title">Schelde</div>
+                <div class="tooltip-body">Reka Schelde (Escaut) is a 350 km long river flowing through Belgium and the Netherlands into the North Sea. Antwerp is the largest port on the river.</div>
+            </div>
+            <div id="tooltip2" class="tooltip-content">
+                <div class="tooltip-title">Leie</div>
+                <div class="tooltip-body">The Leie (Lys) river runs through France and Belgium, joining the Schelde in Gent. Historically called the "Golden River" due to its use in flax production.</div>
+            </div>
+            <div id="tooltip3" class="tooltip-content">
+                <div class="tooltip-title">Lieve</div>
+                <div class="tooltip-body">De Lieve, a canal from 1251, links Gent to the Zwin near Damme, often referred to as Liefken.</div>
+            </div>
+            <div id="tooltip4" class="tooltip-content">
+                <div class="tooltip-title">Ketelvest</div>
+                <div class="tooltip-body">A canal in Gent connecting the Leie and Schelde rivers, dug in the 11th century as a defensive moat.</div>
+            </div>
+            <div id="tooltip5" class="tooltip-content">
+                <div class="tooltip-title">Brugse Vaart</div>
+                <div class="tooltip-body">Brugse Vaart is a significant waterway linking Gent to Bruges.</div>
+            </div>
+            <div id="tooltip6" class="tooltip-content">
+                <div class="tooltip-title">Coupure</div>
+                <div class="tooltip-body">De Coupure is a canal in Gent, dug in 1751 to connect the Leie with Brugse Vaart.</div>
+            </div>
+            <div id="tooltip7" class="tooltip-content">
+                <div class="tooltip-title">Visserij</div>
+                <div class="tooltip-body">A historical waterway in Gent, running parallel to the Schelde and known for its mills.</div>
+            </div>
+            <div id="tooltip8" class="tooltip-content">
+                <div class="tooltip-title">Franse Vaart</div>
+                <div class="tooltip-body">A canal dug in the 18th century in Gent, historically part of the city's waterways.</div>
+            </div>
+            <div id="tooltip9" class="tooltip-content">
+                <div class="tooltip-title">Verbindingsvaart</div>
+                <div class="tooltip-body">A canal connecting Brugse Vaart and the Ringvaart in Gent, playing a key role in inland shipping.</div>
+            </div>
+            <div id="tooltip10" class="tooltip-content">
+                <div class="tooltip-title">Ringvaart</div>
+                <div class="tooltip-body">A man-made canal surrounding Gent, part of the larger canal system.</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleLayer(layerId, buttonId, tooltipId) {
+        // Toggle visibility of the layer
+        var layer = document.getElementById(layerId);
+        var allLayers = document.querySelectorAll('.layer-image');
+        allLayers.forEach(function(l) {
+            l.classList.remove('active');
+        });
+        layer.classList.add('active');
+
+        // Toggle button active state
+        var allButtons = document.querySelectorAll('.toggle-button');
+        allButtons.forEach(function(b) {
+            b.classList.remove('active');
+        });
+        document.getElementById(buttonId).classList.add('active');
+
+        // Show relevant tooltip content
+        var allTooltips = document.querySelectorAll('.tooltip-content');
+        allTooltips.forEach(function(t) {
+            t.classList.remove('active');
+        });
+        document.getElementById(tooltipId).classList.add('active');
+    }
+</script>
+
+</body>
+</html>
