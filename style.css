@@ -104,4 +104,5 @@
 /* Show the active tooltip */
 .tooltip-content.active {
     display: block;
+    margin-bottom: 10px;
 }
