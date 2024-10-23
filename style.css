@@ -8,7 +8,7 @@
 /* Buttons container with scrolling */
 .buttons-container {
     width: 20%;
-    background-color: #f0f0f0;
+    background-color: #f9f9f9;
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto; /* Enable scrolling when there are too many buttons */
@@ -53,9 +53,7 @@
     background-color: #4CAF50;
 }
 
-.toggle-button:hover {
-    background-color: #005f7f;
-}
+
 
 /* Map layers and background */
 .map-image, .layer-image {
