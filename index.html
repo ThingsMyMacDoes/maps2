@@ -14,28 +14,29 @@
     <div class="buttons-container">
         <button class="toggle-button" id="button1" onclick="toggleLayer('layer1', 'button1', 'tooltip1')">Schelde</button>
         <button class="toggle-button" id="button2" onclick="toggleLayer('layer2', 'button2', 'tooltip2')">Leie</button>
-        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3', 'tooltip3')">Lieve 13th C.</button>
-        <button class="toggle-button" id="button4" onclick="toggleLayer('layer4', 'button4', 'tooltip4')">Ketelvest 11th C.</button>
+        <button class="toggle-button" id="button3" onclick="toggleLayer('layer3', 'button3', 'tooltip3')">Ketelvest 11th C.</button>
+        <button class="toggle-button" id="button4" onclick="toggleLayer('layer3', 'button4', 'tooltip4')">Lieve 13th C.</button>
         <button class="toggle-button" id="button5" onclick="toggleLayer('layer5', 'button5', 'tooltip5')">Brugse Vaart 13th-19th C.</button>
         <button class="toggle-button" id="button6" onclick="toggleLayer('layer6', 'button6', 'tooltip6')">Coupure 1751</button>
         <button class="toggle-button" id="button7" onclick="toggleLayer('layer7', 'button7', 'tooltip7')">Visserij 1752</button>
         <button class="toggle-button" id="button8" onclick="toggleLayer('layer8', 'button8', 'tooltip8')">Franse Vaart 1752</button>
-        <button class="toggle-button" id="button9" onclick="toggleLayer('layer9', 'button9', 'tooltip9')">Verbindingsvaart 1863</button>
-        <button class="toggle-button" id="button10" onclick="toggleLayer('layer10', 'button10', 'tooltip10')">Ringvaart 1950-69</button>
-        <button class="toggle-button" id="button11" onclick="toggleLayer('layer11', 'button11', 'tooltip11')">Watersportbaan 1952-54</button>
-        <button class="toggle-button" id="button12" onclick="toggleLayer('layer12', 'button12', 'tooltip12')">Achterdok 1829</button>
-        <button class="toggle-button" id="button13" onclick="toggleLayer('layer13', 'button13', 'tooltip13')">Handelsdok 1829</button>
+        <button class="toggle-button" id="button9" onclick="toggleLayer('layer9', 'button9', 'tooltip9')">Voorhaven 1827</button>
+        <button class="toggle-button" id="button10" onclick="toggleLayer('layer10', 'button10', 'tooltip10')">N.de Pauwvertakking 1827-1829</button>
+        <button class="toggle-button" id="button11" onclick="toggleLayer('layer11', 'button11', 'tooltip11')">Achterdok 1829</button>
+        <button class="toggle-button" id="button12" onclick="toggleLayer('layer12', 'button12', 'tooltip12')">Handelsdok 1829</button>
+        <button class="toggle-button" id="button13" onclick="toggleLayer('layer13', 'button13', 'tooltip13')">Verbindingsvaart 1863</button>
         <button class="toggle-button" id="button14" onclick="toggleLayer('layer14', 'button14', 'tooltip14')">Houtdok 1880</button>
-        <button class="toggle-button" id="button15" onclick="toggleLayer('layer15', 'button15', 'tooltip15')">Voorhaven 1827</button>
-        <button class="toggle-button" id="button16" onclick="toggleLayer('layer16', 'button16', 'tooltip16')">N.de Pauwvertakking 1827-1829</button>
-        <button class="toggle-button" id="button17" onclick="toggleLayer('layer17', 'button17', 'tooltip17')">Kanaal Gent Terneuzen 1827-1968</button>
-        <button class="toggle-button" id="button18" onclick="toggleLayer('layer18', 'button18', 'tooltip18')">Grootdok 1900</button>
-        <button class="toggle-button" id="button19" onclick="toggleLayer('layer19', 'button19', 'tooltip19')">Zuiddok 1915</button>
-        <button class="toggle-button" id="button20" onclick="toggleLayer('layer20', 'button20', 'tooltip20')">Middendok 1925</button>
-        <button class="toggle-button" id="button21" onclick="toggleLayer('layer21', 'button21', 'tooltip21')">Noorddok 1930</button>
-        <button class="toggle-button" id="button22" onclick="toggleLayer('layer22', 'button22', 'tooltip22')">Sifferdok 1931</button>
-        <button class="toggle-button" id="button23" onclick="toggleLayer('layer23', 'button23', 'tooltip23')">Mercatordok 1966-1968</button>
-        <button class="toggle-button" id="button24" onclick="toggleLayer('layer24', 'button24', 'tooltip24')">Put Evergem 1950-69</button><!-- Add more buttons here -->
+        <button class="toggle-button" id="button15" onclick="toggleLayer('layer15', 'button15', 'tooltip15')">Ringvaart 1950-69</button>
+        <button class="toggle-button" id="button16" onclick="toggleLayer('layer16', 'button16', 'tooltip16')">Watersportbaan 1952-54</button>
+        <button class="toggle-button" id="button17" onclick="toggleLayer('layer17', 'button17', 'tooltip17')">Put Evergem 1950-69</button>
+        <button class="toggle-button" id="button18" onclick="toggleLayer('layer18', 'button18', 'tooltip19')">Kanaal Gent Terneuzen 1827-1968</button>
+        <button class="toggle-button" id="button19" onclick="toggleLayer('layer19', 'button19', 'tooltip19')">Grootdok 1900</button>
+        <button class="toggle-button" id="button20" onclick="toggleLayer('layer20', 'button20', 'tooltip20')">Zuiddok 1915</button>
+        <button class="toggle-button" id="button21" onclick="toggleLayer('layer21', 'button21', 'tooltip21')">Middendok 1925</button>
+        <button class="toggle-button" id="button22" onclick="toggleLayer('layer22', 'button22', 'tooltip22')">Noorddok 1930</button>
+        <button class="toggle-button" id="button23" onclick="toggleLayer('layer23', 'button23', 'tooltip23')">Sifferdok 1931</button>
+        <button class="toggle-button" id="button24" onclick="toggleLayer('layer24', 'button24', 'tooltip24')">Mercatordok 1966-1968</button>
+                                                                                                                                  
     </div>
 
     <!-- Map in the center -->
@@ -45,8 +46,8 @@
         <!-- Overlay layers that will be toggled -->
         <img src="Schelde.png" alt="Layer 1" id="layer1" class="layer-image">
         <img src="Leie.png" alt="Layer 2" id="layer2" class="layer-image">
-        <img src="Lieve.png" alt="Layer 3" id="layer3" class="layer-image">
-        <img src="Ketelvaart.png" alt="Layer 4" id="layer4" class="layer-image">
+        <img src="Lieve.png" alt="Layer 4" id="layer4" class="layer-image">
+        <img src="Ketelvaart.png" alt="Layer 3" id="layer3" class="layer-image">
         <img src="Brugse_Vaart.png" alt="Layer 5" id="layer5" class="layer-image">
         <img src="Coupure.png" alt="Layer 6" id="layer6" class="layer-image">
         <img src="Visserij.png" alt="Layer 7" id="layer7" class="layer-image">
