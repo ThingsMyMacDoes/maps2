@@ -87,13 +87,14 @@
     font-size: 18px;
     font-weight: bold;
     color: #00a2d7;
+    margin-top: 10px;
     margin-bottom: 10px;
 }
 
 .tooltip-body {
     margin-top: 0px;
     line-height: 1.6;
-    margin-bottom: 10px;
+    
 }
 
 /* Hide all tooltips initially */
