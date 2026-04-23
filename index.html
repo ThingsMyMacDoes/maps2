@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gent Waterways</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="layout-container">
+
+    <!-- Left: toggle buttons -->
+    <div class="buttons-container" id="buttons-container">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- Centre: map -->
+    <div class="map-container" id="map-container">
+        <img src="layer0.png" alt="Background Map" class="map-image">
+        <!-- Overlay layers populated by JS -->
+    </div>
+
+    <!-- Right: tooltip panel -->
+    <div class="tooltip-container">
+        <div class="tooltip-text" id="tooltip-panel">
+            <div class="tooltip-placeholder">
+                <span>← Select a waterway to learn more</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="data.js"></script>
+<script>
+
+    let activeId = null;
+
+    function buildUI() {
+        const buttonsContainer = document.getElementById('buttons-container');
+        const mapContainer = document.getElementById('map-container');
+
+        waterways.forEach(w => {
+            // --- Button ---
+            const btn = document.createElement('button');
+            btn.className = 'toggle-button';
+            btn.id = `button${w.id}`;
+            btn.dataset.era = w.era;
+            btn.textContent = w.name;
+            btn.addEventListener('click', () => toggleLayer(w.id));
+            buttonsContainer.appendChild(btn);
+
+            // --- Image layer ---
+            const img = document.createElement('img');
+            img.src = w.image;
+            img.alt = w.name;
+            img.id = `layer${w.id}`;
+            img.className = 'layer-image';
+            mapContainer.appendChild(img);
+        });
+    }
+
+    function buildTooltip(w) {
+        let html = `<div class="tooltip-title">${w.name}</div>`;
+        html += `<div class="tooltip-era era-${w.era}">${eraLabel(w.era)}</div>`;
+        html += `<div class="tooltip-body">${w.description}</div>`;
+
+        if (w.sections) {
+            html += `<div class="tooltip-meta">${w.sections}</div>`;
+        }
+
+        if (w.details.length > 0) {
+            html += `<ol class="tooltip-list">`;
+            w.details.forEach(d => { html += `<li>${d}</li>`; });
+            html += `</ol>`;
+        }
+
+        if (w.notes.length > 0) {
+            html += `<ul class="tooltip-list">`;
+            w.notes.forEach(n => { html += `<li>${n}</li>`; });
+            html += `</ul>`;
+        }
+
+        return html;
+    }
+
+    function eraLabel(era) {
+        const labels = {
+            'natural':      'Natural waterway',
+            'medieval':     'Medieval',
+            'early-modern': 'Early modern (18th C.)',
+            'industrial':   'Industrial era (19th C.)',
+            'modern':       'Modern (20th C.)'
+        };
+        return labels[era] || era;
+    }
+
+    function toggleLayer(id) {
+        const w = waterways.find(x => x.id === id);
+        const layer = document.getElementById(`layer${id}`);
+        const btn   = document.getElementById(`button${id}`);
+        const panel = document.getElementById('tooltip-panel');
+
+        const isAlreadyActive = activeId === id && btn.classList.contains('active');
+
+        // Deactivate all buttons & layers
+        waterways.forEach(x => {
+            document.getElementById(`button${x.id}`).classList.remove('active');
+            document.getElementById(`layer${x.id}`).classList.remove('active');
+        });
+
+        if (isAlreadyActive) {
+            // Clicking active button again: hide tooltip
+            activeId = null;
+            panel.innerHTML = `<div class="tooltip-placeholder"><span>← Select a waterway to learn more</span></div>`;
+        } else {
+            // Activate this one
+            activeId = id;
+            btn.classList.add('active');
+            layer.classList.add('active');
+            panel.innerHTML = buildTooltip(w);
+        }
+    }
+
+    buildUI();
+
+</script>
+</body>
+</html>
