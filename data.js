@@ -44,7 +44,7 @@ Scaldis, gevonden in een Romeinse tekst uit de 1e eeuw voor Christus. Een andere
     name: "Ketelvest 11de E.",
     image: "Ketelvaart.png",
     era: "medieval",
-    description: "Het Ketelvest werd in de 11de eeuw gegraven als een soort stadsgracht en vormde een van de grenzen van het gebied dat nu bekend staat als de Gentse Kuip.",
+    description: "De Ketelvest werd in de 11de eeuw gegraven als een soort stadsgracht en vormde een van de grenzen van het gebied dat nu bekend staat als de Gentse Kuip.",
     sections: "1 sectie (600 m)",
     details: [],
     notes: [
