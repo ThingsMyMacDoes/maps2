@@ -4,7 +4,11 @@ const waterways = [
     name: "Schelde",
     image: "Schelde.png",
     era: "natural",
-    description: "De Schelde is een 350 kilometer lange rivier die ontspringt in de Franse gemeente Gouy in Noord-Frankrijk en door België en het zuidwesten van Nederland stroomt naar de Noordzee. De eerste bekende naam was Scaldis, gevonden in een Romeinse tekst uit de 1e eeuw voor Christus. Een andere naam was Scala. De grootste haven aan de Schelde is de haven van Antwerpen. Al voor de Romeinse tijd was de monding van de Schelde van strategisch belang.",
+    description: `De Schelde is een 350 kilometer lange rivier die ontspringt `
+in de Franse gemeente Gouy in Noord-Frankrijk en door België en het
+      zuidwesten van Nederland stroomt naar de Noordzee. De eerste bekende naam was
+Scaldis, gevonden in een Romeinse tekst uit de 1e eeuw voor Christus. Een andere naam was Scala.
+  De grootste haven aan de Schelde is de haven van Antwerpen. Al voor de Romeinse tijd was de monding van de Schelde van strategisch belang.`,
     sections: "8 secties (25,4 km)",
     details: [
       "Boven-Schelde. Ten zuiden van de Ringvaart. 1,8 km",
