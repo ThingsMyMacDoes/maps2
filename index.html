@@ -97,37 +97,6 @@
 
 
 
-(function () {
-    const container = document.getElementById('map-container');
-    let scale = 1, originX = 50, originY = 50;
-
-    container.addEventListener('wheel', function (e) {
-        e.preventDefault();
-        const delta = e.deltaY > 0 ? 0.9 : 1.1;
-        scale = Math.min(Math.max(scale * delta, 1), 6);
-
-        // Zoom towards mouse position
-        const rect = container.getBoundingClientRect();
-        originX = ((e.clientX - rect.left) / rect.width)  * 100;
-        originY = ((e.clientY - rect.top)  / rect.height) * 100;
-
-        applyTransform();
-    }, { passive: false });
-
-    // Reset on double-click
-    container.addEventListener('dblclick', function () {
-        scale = 1; originX = 50; originY = 50;
-        applyTransform();
-    });
-
-    function applyTransform() {
-        const imgs = container.querySelectorAll('.map-image, .layer-image');
-        imgs.forEach(img => {
-            img.style.transformOrigin = `${originX}% ${originY}%`;
-            img.style.transform = `scale(${scale})`;
-        });
-    }
-})();
 
 </script>
     
